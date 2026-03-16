@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #3498db;
+    --secondary: #2c3e50;
+    --success: #27ae60;
+    --danger: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
+    --border: #bdc3c7;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--dark);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #7f8c8d;
+    font-size: 1.1em;
+}
+
+main {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.section h2 {
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.file-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#pdf-file {
+    display: none;
+}
+
+.file-label {
+    background: var(--primary);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.file-label:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#file-info {
+    padding: 15px;
+    background: white;
+    border-radius: 6px;
+    border-left: 4px solid var(--success);
+    display: none;
+}
+
+.controls {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.control-group label {
+    font-weight: bold;
+    color: var(--dark);
+}
+
+.slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: var(--light);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.pdf-viewer-wrapper {
+    background: #f5f5f5;
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+    max-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#pdf-viewer {
+    position: relative;
+    display: inline-block;
+}
+
+#pdf-canvas {
+    max-width: 100%;
+    height: auto;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.signature-box {
+    position: absolute;
+    border: 2px dashed var(--primary);
+    background: rgba(52, 152, 219, 0.1);
+    cursor: move;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.signature-box img {
+    max-width: 100%;
+    max-height: 100%;
+    pointer-events: none;
+}
+
+.signature-box.hidden {
+    display: none;
+}
+
+.resize-handle {
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    width: 16px;
+    height: 16px;
+    background: var(--primary);
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: nwse-resize;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.orientation-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.orientation-warning.hidden {
+    display: none;
+}
+
+.orientation-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 90%;
+}
+
+.orientation-box h2 {
+    color: var(--danger);
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+.landscape-icon {
+    font-size: 4em;
+    animation: rotate 2s infinite;
+    margin: 20px 0;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5000;
+    padding: 20px;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 90%;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: var(--primary);
+    margin: 0;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: var(--dark);
+    cursor: pointer;
+    padding: 0;
+}
+
+#canvas-container {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#signature-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--border);
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1em;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+}
+
+.btn-secondary {
+    background: var(--border);
+    color: var(--dark);
+}
+
+.btn-secondary:hover {
+    background: #a8afb8;
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+    font-size: 1.1em;
+}
+
+.btn-success:hover {
+    background: #229954;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+footer {
+    text-align: center;
+    color: white;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    .controls {
+        grid-template-columns: 1fr;
+    }
+
+    .pdf-viewer-wrapper {
+        max-height: 400px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
