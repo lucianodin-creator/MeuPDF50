@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeuPDF 50 - Assinador Profissional</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 MeuPDF 50</h1>
+            <p>Assinador de PDFs Profissional</p>
+        </header>
+
+        <main>
+            <!-- Orientação Mobile -->
+            <div id="orientation-warning" class="orientation-warning hidden">
+                <div class="orientation-box">
+                    <h2>📱 Vire o Celular</h2>
+                    <p>Para melhor experiência ao assinar, vire o celular para <strong>modo paisagem (horizontal)</strong></p>
+                    <div class="landscape-icon">↻</div>
+                </div>
+            </div>
+
+            <!-- Seção 1: Carregar PDF -->
+            <section class="section" id="section-load">
+                <h2>1️⃣ Carregar PDF</h2>
+                <div class="file-input-wrapper">
+                    <input type="file" id="pdf-file" accept="application/pdf">
+                    <label for="pdf-file" class="file-label">📂 Selecionar PDF</label>
+                </div>
+                <div id="file-info"></div>
+            </section>
+
+            <!-- Seção 2: Visualizar PDF -->
+            <section class="section" id="section-viewer" style="display:none;">
+                <h2>2️⃣ Visualizar & Posicionar Assinatura</h2>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Página: <span id="current-page">1</span> / <span id="total-pages">0</span></label>
+                        <div class="button-group">
+                            <button id="prev-page" class="btn btn-secondary">⬅ Anterior</button>
+                            <button id="next-page" class="btn btn-secondary">Próxima ➡</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Tamanho da Assinatura: <span id="size-value">120</span>px</label>
+                        <input type="range" id="sig-size" min="50" max="300" value="120" class="slider">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Girar Assinatura: <span id="rotation-value">0</span>°</label>
+                        <input type="range" id="sig-rotation" min="0" max="360" value="0" class="slider">
+                    </div>
+
+                    <div class="control-group">
+                        <label>
+                            <input type="checkbox" id="apply-all-pages" checked>
+                            Aplicar em todas as páginas
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pdf-viewer-wrapper">
+                    <div id="pdf-viewer">
+                        <canvas id="pdf-canvas"></canvas>
+                        <div id="signature-preview-box" class="signature-box hidden">
+                            <img id="signature-preview-img" src="" alt="Assinatura">
+                            <div class="resize-handle"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="load-signature" class="btn btn-primary">✏️ Desenhar Assinatura</button>
+                    <button id="clear-signatures" class="btn btn-secondary">🗑️ Limpar Assinatura</button>
+                </div>
+            </section>
+
+            <!-- Seção 3: Desenhar Assinatura -->
+            <div id="signature-modal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>✏️ Desenhe sua Assinatura</h2>
+                        <button class="close-modal">&times;</button>
+                    </div>
+                    <div id="canvas-container">
+                        <canvas id="signature-canvas"></canvas>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="clear-sig" class="btn btn-secondary">🗑️ Limpar</button>
+                        <button id="save-sig" class="btn btn-primary">✅ Confirmar</button>
+                        <button id="cancel-sig" class="btn btn-secondary">❌ Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 4: Download -->
+            <section class="section" id="section-download" style="display:none;">
+                <h2>3️⃣ Baixar PDF Assinado</h2>
+                <button id="download-pdf" class="btn btn-success">📥 Baixar PDF Assinado</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>MeuPDF 50 © 2026 | Assinador de PDFs Seguro e Eficiente</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
